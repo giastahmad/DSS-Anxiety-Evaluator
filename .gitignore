@@ -1,0 +1,15 @@
+# Abaikan folder virtual environment
+venv/
+
+# Abaikan file Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Abaikan file editor
+.vscode/
+.idea/
+
+# Abaikan sistem spesifik file
+.DS_Store
+Thumbs.db
