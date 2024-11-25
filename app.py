@@ -1,305 +1,181 @@
-# import streamlit as st
-# from quisioner import quisioner_page
-
-# # Konfigurasi halaman
-# st.set_page_config(page_title="Cek Tingkat Anxiety", layout="wide")
-
-# # CSS Styling dengan tambahan styling untuk button
-# st.markdown("""
-#     <style>
-#     .centered-title {
-#         text-align: center;
-#         font-size: 48px;
-#         color: #ffffff;
-#         font-weight: bold;
-#         margin-bottom: 30px;
-#     }
-    
-#     /* Custom Large Button Styles */
-#     .stButton > button {
-#         width: 100%;
-#         height: 200px;  /* Tinggi yang sama dengan banner container sebelumnya */
-#         font-size: 32px !important;
-#         font-weight: bold;
-#         color: white !important;
-#         background-color: #4CAF50 !important;
-#         border-radius: 15px !important;
-#         transition: background-color 0.3s ease !important;
-#     }
-    
-#     .stButton > button:hover {
-#         background-color: #45a049 !important;
-#     }
-    
-#     /* Responsive adjustments */
-#     @media (max-width: 768px) {
-#         .stButton > button {
-#             height: 150px;
-#             font-size: 24px !important;
-#         }
-#     }
-#     </style>
-#     """, 
-#     unsafe_allow_html=True
-# )
-
-# # Halaman Home
-# def home_page():
-#     st.markdown(
-#         "<h1 class='centered-title'>Selamat Datang di Website Cek Tingkat Anxiety</h1>",
-#         unsafe_allow_html=True,
-#     )
-
-#     # Layout dengan tiga kolom
-#     col1, col2, col3 = st.columns(3)
-
-#     with col1:
-#         st.button("Fitur 2", key="feature2", on_click=lambda: st.session_state.update({"page": "home"}))
-
-#     with col2:
-#         st.button("Mulai Kuisioner", key="start_quiz", on_click=lambda: st.session_state.update({"page": "quisioner"}))
-            
-
-#     with col3:
-#         st.button("Fitur 3", key="feature3", on_click=lambda: st.session_state.update({"page": "home"}))
-
-# # Routing Halaman Utama
-# def main():
-#     if 'page' not in st.session_state:
-#         st.session_state.page = "home"
-
-#     if st.session_state.page == "home":
-#         home_page()
-#     elif st.session_state.page == "quisioner":
-#         quisioner_page()
-#     else:
-#        st.write("Halaman yang Anda cari belum tersedia.")
-# # Jalankan aplikasi
-# if __name__ == "__main__":
-#     main()
-
-
-#==============================================================================================#
-
-# import streamlit as st
-# from quisioner import quisioner_page
-
-# # Konfigurasi halaman
-# st.set_page_config(page_title="Cek Tingkat Anxiety", layout="wide")
-
-# # CSS Styling khusus untuk tombol besar di home
-# st.markdown("""
-#     <style>
-#     .centered-title {
-#         text-align: center;
-#         font-size: 48px;
-#         color: #ffffff;
-#         font-weight: bold;
-#         margin-bottom: 30px;
-#     }
-    
-#     /* Styling khusus untuk tombol besar di home */
-#     .home-large-button {
-#         width: 100%;
-#         height: 200px !important;
-#         font-size: 32px !important;
-#         font-weight: bold !important;
-#         color: white !important;
-#         background-color: #4CAF50 !important;
-#         border-radius: 15px !important;
-#         transition: background-color 0.3s ease !important;
-#         white-space: normal !important;
-#         display: flex !important;
-#         align-items: center !important;
-#         justify-content: center !important;
-#     }
-    
-#     .home-large-button:hover {
-#         background-color: #45a049 !important;
-#     }
-    
-#     /* Responsive adjustments */
-#     @media (max-width: 768px) {
-#         .home-large-button {
-#             height: 150px !important;
-#             font-size: 24px !important;
-#         }
-#     }
-#     </style>
-#     """, 
-#     unsafe_allow_html=True
-# )
-
-# # Halaman Home
-# def home_page():
-#     st.markdown(
-#         "<h1 class='centered-title'>Selamat Datang di Website Cek Tingkat Anxiety</h1>",
-#         unsafe_allow_html=True,
-#     )
-
-#     # Layout dengan tiga kolom
-#     col1, col2, col3 = st.columns(3)
-
-#     with col1:
-#         # Tambahkan class CSS khusus
-#         st.markdown('''
-#         <button class="home-large-button stButton" 
-#                 onclick="window.location.href='#feature2'">
-#             Fitur 2
-#         </button>
-#         ''', unsafe_allow_html=True)
-
-#     with col2:
-#         # Tambahkan class CSS khusus
-#         st.markdown('''
-#         <button class="home-large-button stButton" 
-#                 onclick="window.location.href='#quisioner'">
-#             Mulai Kuisioner
-#         </button>
-#         ''', unsafe_allow_html=True)
-
-#     with col3:
-#         # Tambahkan class CSS khusus
-#         st.markdown('''
-#         <button class="home-large-button stButton" 
-#                 onclick="window.location.href='#feature3'">
-#             Fitur 3
-#         </button>
-#         ''', unsafe_allow_html=True)
-
-# # Routing Halaman Utama
-# def main():
-#     if 'page' not in st.session_state:
-#         st.session_state.page = "home"
-
-#     if st.session_state.page == "home":
-#         home_page()
-#     elif st.session_state.page == "quisioner":
-#         quisioner_page()
-#     else:
-#        st.write("Halaman yang Anda cari belum tersedia.")
-
-# # Jalankan aplikasi
-# if __name__ == "__main__":
-#     main()
-#=====================================================================================================#
-
 import streamlit as st
-from quisioner import quisioner_page
+from quisioner import QuisionerPage
+import time
 
 # Konfigurasi halaman
-st.set_page_config(page_title="Cek Tingkat Anxiety", layout="wide")
-
-# CSS Styling khusus untuk tombol besar di home
-st.markdown("""
-    <style>
-    .centered-title {
-        text-align: center;
-        font-size: 48px;
-        color: #ffffff;
-        font-weight: bold;
-        margin-bottom: 30px;
-    }
-    
-    /* Styling khusus untuk tombol besar di home */
-    .home-large-button {
-        width: 100%;
-        height: 200px !important;
-        font-size: 32px !important;
-        font-weight: bold !important;
-        color: white !important;
-        background-color: #4CAF50 !important;
-        border-radius: 15px !important;
-        transition: background-color 0.3s ease !important;
-        white-space: normal !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-    
-    .home-large-button:hover {
-        background-color: #45a049 !important;
-    }
-    
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .home-large-button {
-            height: 150px !important;
-            font-size: 24px !important;
-        }
-    }
-    </style>
-    """, 
-    unsafe_allow_html=True
+st.set_page_config(
+    page_title="Cek Tingkat Anxiety", 
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
-# Fungsi untuk mengatur halaman
-def set_page(page_name):
-    st.session_state.page = page_name
+# CSS untuk styling
+st.markdown("""
+<style>
+    /* Global styles */
+    [data-testid="stAppViewContainer"] {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        color: white;
+    }
+    
+    /* Home page styles */
+    .home-container {
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 2rem;
+    }
+    
+    .welcome-section {
+        text-align: center;
+        margin-top: 4rem;
+        animation: fadeIn 1s ease-in;
+    }
+    
+    .feature-box {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 2rem;
+        height: 300px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        margin: 1rem;
+        backdrop-filter: blur(10px);
+    }
+    
+    .feature-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        background: rgba(255, 255, 255, 0.08);
+    }
+    
+    .feature-icon {
+        font-size: 48px;
+        margin-bottom: 1rem;
+    }
+    
+    .feature-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #e0e0e0;
+    }
+    
+    .feature-description {
+        font-size: 16px;
+        margin-bottom: 1rem;
+        color: #b0b0b0;
+    }
 
-# Halaman Home
+    .custom-button {
+        background: #6a1b9a;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .custom-button:hover {
+        background: #8e24aa;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .animated {
+        animation: slideUp 0.5s ease-out;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 def home_page():
-    st.markdown(
-        "<h1 class='centered-title'>Selamat Datang di Website Cek Tingkat Anxiety</h1>",
-        unsafe_allow_html=True,
-    )
-
-    # Layout dengan tiga kolom
+    # Welcome section
+    st.markdown("""
+        <div class="home-container">
+            <div class="welcome-section">
+                <h1 style="font-size: 3.5rem; margin-bottom: 1rem; color: #e0e0e0;">Selamat Datang di Anxiety Evaluator</h1>
+                <p style="font-size: 1.2rem; color: #b0b0b0;">Kenali tingkat kondisi gangguan kecemasan (anxiety) anda</p>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+    
     col1, col2, col3 = st.columns(3)
-
+    
     with col1:
-        # Tombol Fitur 2 dengan navigasi menggunakan session_state
-        if st.button("Fitur 2", key="feature2", 
-                     help="Klik untuk menuju Fitur 2",
-                     use_container_width=True,
-                     type="primary"):
-            set_page("feature2")
+        st.markdown("""
+            <div class="feature-box animated" style="animation-delay: 0.2s;">
+                <div>
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Statistik Anxiety</div>
+                    <div class="feature-description">Lihat tren dan statistik anxiety di berbagai kelompok usia</div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        if st.button("Lihat Statistik", key="stats", type="primary", use_container_width=True):
+            st.session_state.page = "statistics"
             st.rerun()
 
     with col2:
-        # Tombol Mulai Kuisioner dengan navigasi menggunakan session_state
-        if st.button("Mulai Kuisioner", key="start_quiz", 
-                     help="Klik untuk memulai kuisioner",
-                     use_container_width=True,
-                     type="primary"):
-            set_page("quisioner")
+        st.markdown("""
+            <div class="feature-box animated" style="animation-delay: 0.4s;">
+                <div>
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-title">Mulai Tes Anxiety</div>
+                    <div class="feature-description">Ikuti tes DASS-42 untuk mengetahui tingkat kecemasan Anda</div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        if st.button("Mulai Tes", key="test", type="primary", use_container_width=True):
+            st.session_state.page = "quisioner"
             st.rerun()
 
     with col3:
-        # Tombol Fitur 3 dengan navigasi menggunakan session_state
-        if st.button("Fitur 3", key="feature3", 
-                     help="Klik untuk menuju Fitur 3",
-                     use_container_width=True,
-                     type="primary"):
-            set_page("feature3")
+        st.markdown("""
+            <div class="feature-box animated" style="animation-delay: 0.6s;">
+                <div>
+                    <div class="feature-icon">ℹ️</div>
+                    <div class="feature-title">Informasi</div>
+                    <div class="feature-description">Pelajari lebih lanjut tentang anxiety dan cara mengatasinya</div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        if st.button("Pelajari", key="info", type="primary", use_container_width=True):
+            st.session_state.page = "information"
             st.rerun()
 
-# Fungsi untuk halaman Fitur 2
-def feature2_page():
-    st.title("Fitur 2")
-    if st.button("Kembali ke Beranda"):
-        set_page("home")
-        st.rerun()
+def main():
+    if 'page' not in st.session_state:
+        st.session_state.page = "home"
 
-# Fungsi untuk halaman Fitur 3
-def feature3_page():
-    st.title("Fitur 3")
-    if st.button("Kembali ke Beranda"):
-        set_page("home")
-        st.rerun()
+    if st.session_state.page == "home":
+        home_page()
+    elif st.session_state.page == "quisioner":
+        quisioner = QuisionerPage()
+        quisioner.show()
+    elif st.session_state.page in ["statistics", "information"]:
+        st.title(f"Halaman {st.session_state.page}")
+        st.write("Halaman ini sedang dalam pengembangan")
+        if st.button("Kembali ke Beranda", type="primary"):
+            st.session_state.page = "home"
+            st.rerun()
 
-# Inisialisasi session_state untuk page jika belum ada
-if 'page' not in st.session_state:
-    st.session_state.page = "home"
-
-# Routing berdasarkan page di session_state
-if st.session_state.page == "home":
-    home_page()
-elif st.session_state.page == "quisioner":
-    quisioner_page()
-elif st.session_state.page == "feature2":
-    feature2_page()
-elif st.session_state.page == "feature3":
-    feature3_page()
-else:
-    st.write("Halaman yang Anda cari belum tersedia.")
+if __name__ == "__main__":
+    main()
