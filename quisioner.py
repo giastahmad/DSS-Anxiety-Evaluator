@@ -1,6 +1,4 @@
 import streamlit as st
-import time
-import joblib
 import numpy as np
 import pickle
 
