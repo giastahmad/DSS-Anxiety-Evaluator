@@ -9,16 +9,14 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# CSS untuk styling
+# CSS untuk styling (menggunakan CSS yang sudah ada, tidak ada perubahan)
 st.markdown("""
 <style>
-    /* Global styles */
     [data-testid="stAppViewContainer"] {
         background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         color: white;
     }
     
-    /* Home page styles */
     .home-container {
         height: 50vh;
         display: flex;
@@ -89,7 +87,6 @@ st.markdown("""
         background: #8e24aa;
     }
     
-    /* Animations */
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
@@ -107,7 +104,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 def home_page():
-    # Welcome section
     st.markdown("""
         <div class="home-container">
             <div class="welcome-section">
@@ -170,6 +166,9 @@ def main():
     elif st.session_state.page == "quisioner":
         quisioner = QuisionerPage()
         quisioner.show()
+    elif st.session_state.page == "result":
+        quisioner = QuisionerPage()
+        quisioner.show_results()
     elif st.session_state.page in ["statistics", "information"]:
         st.title(f"Halaman {st.session_state.page}")
         st.write("Halaman ini sedang dalam pengembangan")
