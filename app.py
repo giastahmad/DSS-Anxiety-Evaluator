@@ -1,6 +1,5 @@
 import streamlit as st
 from quisioner import QuisionerPage
-import time
 
 # Konfigurasi halaman
 st.set_page_config(
