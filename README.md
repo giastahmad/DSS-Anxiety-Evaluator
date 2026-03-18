@@ -10,7 +10,7 @@ Aplikasi ini dirancang untuk:
 Model machine learning yang digunakan adalah K-Nearest Neighbors (KNN), yang telah dilatih untuk mengenali pola kecemasan dari [dataset berikut](https://www.kaggle.com/datasets/lucasgreenwell/depression-anxiety-stress-scales-responses).  
 
 ## Daftar Anggota  
-1. Giast Ahmad - 140810220086
+1. Giast Ahmad - 140810220018
 2. Devalco Aghazzan Muslion - 140810220079
 3. Angga Prasetyo - 140810220086
 
