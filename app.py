@@ -1,15 +1,20 @@
 import streamlit as st
+import numpy as np
 from quisioner import QuisionerPage
+from additional_form import ml_context_form, profile_data_form
+from result import final_result_page, result_normal
 
-# Konfigurasi halaman
+
+# Page Configuration
 st.set_page_config(
-    page_title="Cek Tingkat Anxiety", 
+    page_title="Anxiety Evaluator & Root Cause Analysis",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
 )
 
-# CSS untuk styling
-st.markdown("""
+# CSS
+st.markdown(
+    """
 <style>
     [data-testid="stAppViewContainer"] {
         background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
@@ -17,17 +22,25 @@ st.markdown("""
     }
     
     .home-container {
-        height: 50vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 2rem;
+        padding: 4rem 2rem;
+        max-width: 100vw;
+        margin: 0 auto;
+        animation: fadeIn 1s ease-in;
     }
     
-    .welcome-section {
-        text-align: center;
-        margin-top: 4rem;
-        animation: fadeIn 1s ease-in;
+    .info-box {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+    }
+    
+    .info-boxes-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2rem;
     }
     
     .feature-box {
@@ -69,22 +82,6 @@ st.markdown("""
         margin-bottom: 1rem;
         color: #b0b0b0;
     }
-
-    .custom-button {
-        background: #6a1b9a;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        color: white;
-        cursor: pointer;
-        transition: background 0.3s ease;
-        width: 100%;
-        margin-top: 1rem;
-    }
-
-    .custom-button:hover {
-        background: #8e24aa;
-    }
     
     @keyframes fadeIn {
         from { opacity: 0; }
@@ -99,65 +96,91 @@ st.markdown("""
     .animated {
         animation: slideUp 0.5s ease-out;
     }
+    
+    @media (max-width: 768px) {
+    .info-boxes-container {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .info-box {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
+
 
 def home_page():
-    st.markdown("""
-        <div class="home-container">
-            <div class="welcome-section">
-                <h1 style="font-size: 3.5rem; margin-bottom: 1rem; color: #e0e0e0;">Selamat Datang di Anxiety Evaluator</h1>
-                <p style="font-size: 1.2rem; color: #b0b0b0;">Kenali tingkat kondisi gangguan kecemasan (anxiety) anda</p>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-            <div class="feature-box animated" style="animation-delay: 0.2s;">
-                <div>
-                    <div class="feature-icon">📊</div>
-                    <div class="feature-title">Statistik Anxiety</div>
-                    <div class="feature-description">Lihat tren dan statistik anxiety di berbagai kelompok usia</div>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Lihat Statistik", key="stats", type="primary", use_container_width=True):
-            st.session_state.page = "statistics"
-            st.rerun()
+    st.markdown(
+        """
+<div class="home-container">
+<h1 style="font-size: 3.5rem; text-align: center; margin-bottom: 1rem;">Anxiety Evaluator</h1>
+<p style="font-size: 1.2rem; text-align: center; color: #b0b0b0; margin-bottom: 3rem;">
+Recognize your anxiety level and find the root cause of it.
+</p>
+
+<div class="info-boxes-container">
+<div class="info-box">
+<h3 style="color: #e0e0e0;">What is Anxiety?</h3>
+<p style="color: #b0b0b0; line-height: 1.6;">
+Anxiety is a feeling of worry or unease about something that might happen in the future. It often comes with physical signs like muscle tension, faster breathing, and a rapid heartbeat.
+It is different from fear. Anxiety is about uncertain or unclear threats in the future, while fear is a short-term response to a clear and immediate danger.
+To manage anxiety effectively, it's important to understand its root cause, since addressing what triggers it is the first step toward reducing it.
+</p>
+</div>
+
+<div class="info-box">
+<h3 style="color: #e0e0e0;">About the DASS-42 Test</h3>
+<p style="color: #b0b0b0; line-height: 1.6;">
+The DASS-42 (Depression Anxiety Stress Scales) is a self-assessment tool used to measure levels of depression, anxiety, and stress. It consists of 42 questions, 
+with 14 questions dedicated to each emotional state. This test does not provide a clinical diagnosis, but it helps identify the severity of symptoms and gives insight 
+into a person's mental well-being based on how they have felt over the past week. In this application, only the 14 questions related to anxiety are used, allowing for 
+a more focused and efficient assessment of an individual's anxiety level.
+</p>
+</div>
+
+<div class="info-box">
+<h3 style="color: #e0e0e0;">Disclaimer !!</h3>
+<p style="color: #b0b0b0; line-height: 1.6;">
+This application is not a medical diagnostic tool and does not replace professional healthcare advice. The results are for informational purposes only. For accurate evaluation, 
+diagnosis, or treatment, please consult a licensed psychologist, psychiatrist, or other healthcare professional. Use this application as a supportive guide to help you make more 
+informed decisions about your well-being, not as a definitive medical conclusion.
+</p>
+</div>
+</div>
+</div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    col1, col2, col3 = st.columns([1, 2, 1])
 
     with col2:
-        st.markdown("""
-            <div class="feature-box animated" style="animation-delay: 0.4s;">
-                <div>
-                    <div class="feature-icon">📝</div>
-                    <div class="feature-title">Mulai Tes Anxiety</div>
-                    <div class="feature-description">Ikuti tes DASS-42 untuk mengetahui tingkat kecemasan Anda</div>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Mulai Tes", key="test", type="primary", use_container_width=True):
-            st.session_state.page = "quisioner"
+        st.markdown(
+            """
+<div class="feature-box animated" style="animation-delay: 0.4s;">
+<div>
+<div class="feature-icon">📝</div>
+<div class="feature-title">Start Anxiety Test</div>
+<div class="feature-description">Take the DASS-42 test to understand your anxiety level</div>
+</div>
+</div>
+        """,
+            unsafe_allow_html=True,
+        )
+        if st.button(
+            "Start Test", key="test", type="primary", use_container_width=True
+        ):
+            st.session_state.page = "profile_form"
             st.rerun()
 
-    with col3:
-        st.markdown("""
-            <div class="feature-box animated" style="animation-delay: 0.6s;">
-                <div>
-                    <div class="feature-icon">ℹ️</div>
-                    <div class="feature-title">Informasi</div>
-                    <div class="feature-description">Pelajari lebih lanjut tentang anxiety dan cara mengatasinya</div>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Pelajari", key="info", type="primary", use_container_width=True):
-            st.session_state.page = "information"
-            st.rerun()
 
 def main():
-    if 'page' not in st.session_state:
+    if "page" not in st.session_state:
         st.session_state.page = "home"
 
     if st.session_state.page == "home":
@@ -165,15 +188,15 @@ def main():
     elif st.session_state.page == "quisioner":
         quisioner = QuisionerPage()
         quisioner.show()
+    elif st.session_state.page == "profile_form":
+        profile_data_form()
+    elif st.session_state.page == "ml_context_form":
+        ml_context_form()
+    elif st.session_state.page == "final_result_normal":
+        result_normal()
     elif st.session_state.page == "result":
-        quisioner = QuisionerPage()
-        quisioner.show_results()
-    elif st.session_state.page in ["statistics", "information"]:
-        st.title(f"Halaman {st.session_state.page}")
-        st.write("Halaman ini sedang dalam pengembangan")
-        if st.button("Kembali ke Beranda", type="primary"):
-            st.session_state.page = "home"
-            st.rerun()
+        final_result_page()
+
 
 if __name__ == "__main__":
     main()

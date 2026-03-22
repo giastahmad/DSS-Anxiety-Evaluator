@@ -13,3 +13,4 @@ __pycache__/
 # Abaikan sistem spesifik file
 .DS_Store
 Thumbs.db
+.streamlit/secrets.toml
