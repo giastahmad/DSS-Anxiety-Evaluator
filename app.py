@@ -8,7 +8,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# CSS untuk styling (menggunakan CSS yang sudah ada, tidak ada perubahan)
+# CSS untuk styling
 st.markdown("""
 <style>
     [data-testid="stAppViewContainer"] {
