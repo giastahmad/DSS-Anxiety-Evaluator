@@ -1,10 +1,6 @@
 import streamlit as st
 import pandas as pd
 import joblib
-
-import streamlit as st
-import pandas as pd
-import joblib
 import json
 import google.generativeai as genai
 
