@@ -26,7 +26,7 @@ def profile_data_form():
         ["High School", "Bachelor", "Master", "PhD"], index=None
     )
     st.session_state.profile_data["Marital_Status"] = col4.selectbox(
-        "Marital Status", ["Single", "Married", "Divorced", "Widowed"]
+        "Marital Status (If you have a partner, e.g., dating or engaged, please select 'Married')", ["Single", "Married", "Divorced", "Widowed"]
     )
     st.session_state.profile_data["Country"] = st.text_input(
         "Country of Residence", "", placeholder="e.g., Indonesia, USA, etc."

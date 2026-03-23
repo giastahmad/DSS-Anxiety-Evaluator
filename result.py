@@ -37,12 +37,20 @@ def final_result_page():
     drop_columns = ['Age', 'Gender', 'Education', 'Country']
     df_model = df_input.drop(columns=[col for col in drop_columns if col in df_input.columns])
     
-    for col in df_model.select_dtypes(include=['object']).columns:
-        df_model[col] = df_model[col].astype('category')
+    try:
+        category_dict = joblib.load('Model/category_dict.pkl')
+        
+        for col in df_model.select_dtypes(include=['object']).columns:
+            if col in category_dict:
+                df_model[col] = pd.Categorical(df_model[col], categories=category_dict[col])
+    except FileNotFoundError:
+        st.error("Category mapping file not found. Please ensure 'category_dict.pkl' is in the 'Model' directory.")
+        return
 
     main_causes = []
     try:
-        model = joblib.load('Model/cause_analysis_model.pkl')
+        model = joblib.load('Model/cause_predict_model.pkl')
+        df_model = df_model[model.feature_name_]
         probability = model.predict_proba(df_model)[0]
         class_list = model.classes_
         
@@ -73,17 +81,42 @@ def final_result_page():
     except Exception as e:
         st.error(f"Error processing ML model: {e}")
         return
+    
+    st.markdown("""<h3 style="color: #e0e0e0;">Potential Contributing Factors</h3>""", unsafe_allow_html=True)
+    
+    html = """
+    <div style="display:flex; flex-wrap:wrap; gap:10px;">
+    """
+
+    for cause in main_causes:
+        html += f"""
+<span style="
+background-color:{color_code};
+color:#ffffff;
+padding:6px 22px;
+border-radius:20px;
+font-size:16px;
+">
+{cause}
+</span>
+"""
+
+    html += "</div>"
+
+    st.markdown(html, unsafe_allow_html=True)
+    
+    marital_status = 'Married or in a Relationship' if user_data.get('Marital_Status') == 'Married' else user_data.get('Marital_Status')
 
     llm_context = {
         "user_demographics": {
             "age": user_data.get('Age'),
             "gender": user_data.get('Gender'),
-            "marital_status": user_data.get('Marital_Status'),
+            "marital_status": marital_status,
             "employment_status": user_data.get('Employment_Status'),
             "country": user_data.get('Country')
         },
         "clinical_result": {
-            "dass_42_level": dass_level
+            "dass_42_level (Anxiety)": dass_level
         },
         "machine_learning_analysis": {
             "main_stress_triggers": main_causes
@@ -100,10 +133,13 @@ def final_result_page():
     Task:
     Write a warm, highly personalized 1-paragraph closing message for this user in English. 
     - Validate their feelings based on their specific demographics and triggers.
-    - Give a gentle, practical word of encouragement or a simple coping mechanism suggestion suitable for their situation. Tone: Supportive, conversational, not clinical.
+    - Give a gentle, practical word of encouragement or a simple coping mechanism suggestion suitable for their situation.
+    - Calibrate your tone and advice based strictly on their `dass_42_level (Anxiety)`:
+        * If Mild: Focus on maintaining their current well-being, mindfulness, and light stress management.
+    Tone: Supportive, conversational, not clinical.
     """
 
-    st.markdown("""<h3 style="color: #e0e0e0;">Personalized Suggestion</h3>""", unsafe_allow_html=True)
+    st.markdown("""<h3 style="color: #e0e0e0;">Personalized Suggestion*</h3>""", unsafe_allow_html=True)
     
     with st.spinner("Analyzing your profile and generating personalized advice..."):
         try:
@@ -115,9 +151,13 @@ def final_result_page():
             print(f"Gemini API Error: {e}")
 
     st.markdown(f"""
-    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; line-height: 1.6; color: #e0e0e0;">
+    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 2rem; line-height: 1.6; color: #e0e0e0;">
         {llm_text}
     </div>
+    <br>
+    <p style="color: #5e5959; font-size: 0.9rem;">
+        * This result is for informational and decision-support purposes only and is not a medical diagnosis. Please consult a qualified professional for proper evaluation.
+    </p>
     """, unsafe_allow_html=True)
     
     if st.button("Back to Homepage", type="primary"):
