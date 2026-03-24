@@ -34,7 +34,7 @@ def final_result_page():
         return
 
     df_input = pd.DataFrame([user_data])
-    drop_columns = ['Age', 'Gender', 'Education', 'Country']
+    drop_columns = ['Age', 'Gender', 'Education', 'Country', 'Income_UI', 'Discuss_UI']
     df_model = df_input.drop(columns=[col for col in drop_columns if col in df_input.columns])
     
     try:

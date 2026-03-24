@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 from quisioner import QuisionerPage
-from additional_form import ml_context_form, profile_data_form
+from additional_form import profile_data_form, activities_and_finance_page, social_life_page, lifestyle_page
 from result import final_result_page, result_normal
 
 
@@ -185,13 +185,17 @@ def main():
 
     if st.session_state.page == "home":
         home_page()
+    elif st.session_state.page == "profile_form":
+        profile_data_form()
     elif st.session_state.page == "quisioner":
         quisioner = QuisionerPage()
         quisioner.show()
-    elif st.session_state.page == "profile_form":
-        profile_data_form()
-    elif st.session_state.page == "ml_context_form":
-        ml_context_form()
+    elif st.session_state.page == "ml_context_form" or st.session_state.page == "activities_finance":
+        activities_and_finance_page()
+    elif st.session_state.page == "social_life":
+        social_life_page()
+    elif st.session_state.page == "lifestyle":
+        lifestyle_page()
     elif st.session_state.page == "final_result_normal":
         result_normal()
     elif st.session_state.page == "result":
