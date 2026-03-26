@@ -39,12 +39,12 @@ The root cause prediction is powered by a **LightGBM Classifier** trained to ide
 ## Visualizations
 
 ### Model Evaluation:
-![Confusion Matrix](archive\confusion-matrix.png)
+![Confusion Matrix](archive/confusion-matrix.png)
 
 ### Application UI:
-![Home Page](archive\home-page.png)
-![form Page](archive\form-page.png)
-![result Page](archive\result-page.png)
+![Home Page](archive/home-page.png)
+![form Page](archive/form-page.png)
+![result Page](archive/result-page.png)
 
 ## How to Access
 
