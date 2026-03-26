@@ -1,16 +1,84 @@
 # Anxiety Evaluator
 
-Aplikasi ini adalah sebuah platform berbasis web untuk membantu pengguna dalam mengevaluasi tingkat kecemasan menggunakan metode DASS-42 (Depression Anxiety Stress Scales). Proyek ini mencakup pengumpulan data pengguna, pengisian kuesioner, dan analisis hasil dengan menggunakan model machine learning untuk memprediksi tingkat kecemasan.  
+**Anxiety Evaluator** is a web-based application designed to help users assess their anxiety levels and identify potential root causes. By combining the clinical standard DASS-42 questionnaire with a custom Machine Learning model, the application not only measures the severity of a user's anxiety but also predicts the primary contributing factors (Work/Academic, Financial, Social, or Lifestyle). Furthermore, the app integrates with a Generative AI assistant to provide personalized, empathetic coping suggestions based on the user's unique profile and test results.
 
-## Deskripsi Proyek  
-Aplikasi ini dirancang untuk:  
-- Memberikan pengalaman yang interaktif dan mudah digunakan untuk pengguna dalam menjawab kuesioner DASS-42.  
-- Menghasilkan prediksi tingkat kecemasan berdasarkan jawaban kuesioner pengguna.  
+## What is Anxiety?
 
-Model machine learning yang digunakan adalah K-Nearest Neighbors (KNN), yang telah dilatih untuk mengenali pola kecemasan dari [dataset berikut](https://www.kaggle.com/datasets/lucasgreenwell/depression-anxiety-stress-scales-responses).  
+Anxiety is a feeling of worry, nervousness, or unease about something with an uncertain outcome. While fear is a short-term response to a clear and immediate danger, anxiety is often oriented toward future, unclear threats. It frequently manifests with physical signs like muscle tension, faster breathing, and a rapid heartbeat. Understanding the specific root causes or triggers of anxiety is the first critical step toward managing it effectively.
 
-## Daftar Anggota  
-1. Giast Ahmad - 140810220018
-2. Devalco Aghazzan Muslion - 140810220079
-3. Angga Prasetyo - 140810220086
+## What is the DASS-42?
 
+The DASS-42 (Depression Anxiety Stress Scales) is a self-assessment tool used globally to measure negative emotional states. It consists of 42 questions divided into three sub-scales (Depression, Anxiety, and Stress), with 14 questions dedicated to each. 
+
+**Note:** This application specifically utilizes the **14 anxiety-focused questions** to provide a targeted and efficient assessment of the user's current anxiety levels.
+
+## Tech Stack
+
+| Category | Technology |
+| :--- | :--- |
+| **Frontend/UI:** | Streamlit
+| **Data Processing:** | Python, Pandas, NumPy
+| **Machine Learning:** | LightGBM, Scikit-learn, Joblib
+| **Generative AI:** | Google Gemini API (`gemini-2.5-flash`)
+| **Visualization:** | Matplotlib, Seaborn
+| **Version Control** | Git & GitHub |
+
+## Data Sources
+
+1. **Clinical Assessment:** DASS-42 Questionnaire framework for the base anxiety scoring.
+2. **Machine Learning Training Data:** [Global Mental Health & Lifestyle Survey Dataset](https://www.kaggle.com/datasets/dhrubangtalukdar/global-mental-health-and-lifestyle-survey-dataset?select=mental_health.csv). The dataset was filtered specifically for individuals reporting mental health issues, and features were engineered into actionable scores.
+
+## Machine Learning Model Details
+
+The root cause prediction is powered by a **LightGBM Classifier** trained to identify the most likely source of a user's stress. 
+
+* **Feature Engineering:** Raw data inputs (e.g., sleep hours, job satisfaction, loneliness, income level) were transformed via custom penalty and ratio algorithms into four core composite scores: `Work_Score`, `Financial_Score`, `Social_Score`, and `Lifestyle_Score`. The highest score determines the `Target_Cause`.
+* **Model Parameters:** `learning_rate=0.05`, `n_estimators=400`, `num_leaves=40`, and `class_weight='balanced'` to handle potential distribution skews in the training data.
+* **Performance:** The model achieved an accuracy of **90.08%** on the testing split, with well-balanced Precision, Recall, and F1-scores across all four target categories.
+
+## Visualizations
+
+### Model Evaluation:
+![Confusion Matrix](archive\confusion-matrix.png)
+
+### Application UI:
+![Home Page](archive\home-page.png)
+![form Page](archive\form-page.png)
+![result Page](archive\result-page.png)
+
+## How to Access
+
+You can access and use the live application here:  
+🔗 **[Anxiety Evaluator on Streamlit](https://anxiety-evaluator.streamlit.app/)**
+
+## Local Setup & Installation
+
+```bash
+# Clone the repository
+git clone [https://github.com/yourusername/anxiety-evaluator.git](https://github.com/yourusername/anxiety-evaluator.git)
+
+# Navigate to the directory
+cd anxiety-evaluator
+
+# Install required dependencies
+pip install -r requirements.txt
+
+# Set up your Gemini API Key in .streamlit/secrets.toml
+# GEMINI_API_KEY = "your_api_key_here"
+
+# Run the app
+streamlit run main.py
+```
+## Disclaimer ⚠️
+
+**This application is not a medical diagnostic tool.** It does not replace professional healthcare advice, clinical diagnosis, or treatment. The results generated by the DASS-42 questionnaire and the Machine Learning model are for informational and self-reflection purposes only. If you are experiencing severe anxiety or mental distress, please consult a licensed psychologist, psychiatrist, or medical professional.
+
+## Contributors
+
+This project is the result of a team collaboration consisting of:
+
+| Name | NPM |
+| :--- | :--- |
+| **Giast Ahmad** | 140810220018 |
+| **Devalco Aghazzan Muslion** | 140810220079 |
+| **Angga Prasetyo** | 140810220086 |
