@@ -55,10 +55,10 @@ You can access and use the live application here:
 
 ```bash
 # Clone the repository
-git clone [https://github.com/yourusername/anxiety-evaluator.git](https://github.com/yourusername/anxiety-evaluator.git)
+git clone https://github.com/yourusername/DSS-Anxiety-Evaluator.git
 
 # Navigate to the directory
-cd anxiety-evaluator
+cd DSS-Anxiety-Evaluator.git
 
 # Install required dependencies
 pip install -r requirements.txt
@@ -67,7 +67,7 @@ pip install -r requirements.txt
 # GEMINI_API_KEY = "your_api_key_here"
 
 # Run the app
-streamlit run main.py
+streamlit run app.py
 ```
 ## Disclaimer ⚠️
 
